@@ -6,6 +6,8 @@ class OptionList extends StatelessWidget {
     required this.onTap,
     required this.suggestionListHeight,
     this.suggestionBuilder,
+    this.separatorBuilder,
+    this.suggestionListMargin = EdgeInsets.zero,
     this.suggestionListDecoration,
   });
 
@@ -19,6 +21,10 @@ class OptionList extends StatelessWidget {
 
   final BoxDecoration? suggestionListDecoration;
 
+  final EdgeInsets suggestionListMargin;
+
+  final IndexedWidgetBuilder? separatorBuilder;
+
   @override
   Widget build(BuildContext context) {
     return data.isNotEmpty
@@ -29,26 +35,26 @@ class OptionList extends StatelessWidget {
               maxHeight: suggestionListHeight,
               minHeight: 0,
             ),
-            child: ListView.builder(
+            margin: suggestionListMargin,
+            child: ListView.separated(
               itemCount: data.length,
               shrinkWrap: true,
-              itemBuilder: (context, index) {
-                return GestureDetector(
-                  onTap: () {
-                    onTap(data[index]);
-                  },
-                  child: suggestionBuilder != null
-                      ? suggestionBuilder!(data[index])
-                      : Container(
-                          color: Colors.blue,
-                          padding: EdgeInsets.all(20.0),
-                          child: Text(
-                            data[index]['display'],
-                            style: TextStyle(fontSize: 12),
-                          ),
+              padding: EdgeInsets.zero,
+              separatorBuilder: separatorBuilder ??
+                  (context, index) => const SizedBox.shrink(),
+              itemBuilder: (context, index) => GestureDetector(
+                onTap: () => onTap(data[index]),
+                child: suggestionBuilder != null
+                    ? suggestionBuilder!(data[index])
+                    : Container(
+                        color: Colors.blue,
+                        padding: EdgeInsets.all(20.0),
+                        child: Text(
+                          data[index]['display'],
+                          style: TextStyle(fontSize: 12),
                         ),
-                );
-              },
+                      ),
+              ),
             ),
           )
         : Container();
