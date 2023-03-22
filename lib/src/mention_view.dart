@@ -8,14 +8,12 @@ class FlutterMentions extends StatefulWidget {
     this.suggestionPosition = SuggestionPosition.Bottom,
     this.suggestionListHeight = 300.0,
     this.onMarkupChanged,
-    this.suggestionListSeparatorBuilder,
     this.onMentionAdd,
     this.onSearchChanged,
     this.leading = const [],
     this.trailing = const [],
     this.suggestionListDecoration,
     this.focusNode,
-    this.suggestionListMargin = EdgeInsets.zero,
     this.decoration = const InputDecoration(),
     this.keyboardType,
     this.textInputAction,
@@ -85,10 +83,6 @@ class FlutterMentions extends StatefulWidget {
   ///
   /// Defaults to `300.0`
   final double suggestionListHeight;
-
-  final EdgeInsets suggestionListMargin;
-
-  final IndexedWidgetBuilder? suggestionListSeparatorBuilder;
 
   /// A Functioned which is triggered when ever the input changes
   /// but with the markup of the selected mentions
@@ -435,6 +429,8 @@ class FlutterMentionsState extends State<FlutterMentions> {
                     suggestionListHeight: widget.suggestionListHeight,
                     suggestionBuilder: list.suggestionBuilder,
                     suggestionListDecoration: widget.suggestionListDecoration,
+                    separatorBuilder: list.separatorBuilder,
+                    suggestionListMargin: list.suggestionListMargin,
                     data: list.data.where((element) {
                       final ele = element['display'].toLowerCase();
                       final str = _selectedMention!.str

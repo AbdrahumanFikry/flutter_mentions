@@ -23,6 +23,8 @@ class Mention {
     this.suggestionBuilder,
     this.disableMarkup = false,
     this.markupBuilder,
+    this.suggestionListMargin = EdgeInsets.zero,
+    this.separatorBuilder,
   });
 
   /// A single character that will be used to trigger the suggestions.
@@ -50,6 +52,10 @@ class Mention {
   /// Allows to set custom markup for the mentioned item.
   final String Function(String trigger, String mention, String value)?
       markupBuilder;
+
+  final EdgeInsets suggestionListMargin;
+
+  final IndexedWidgetBuilder? separatorBuilder;
 }
 
 class Annotation {
